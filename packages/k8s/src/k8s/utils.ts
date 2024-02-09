@@ -73,12 +73,14 @@ export function containerVolumes(
   }
 
   for (const userVolume of userMountVolumes) {
+    core.debug(`Adding user volume '${userVolume.sourceVolumePath}'`)
     let sourceVolumePath = ''
     if (path.isAbsolute(userVolume.sourceVolumePath)) {
       if (!userVolume.sourceVolumePath.startsWith(workspacePath)) {
         throw new Error(
           'Volume mounts outside of the work folder are not supported'
         )
+        core.debug(`workspacePath is '${workspacePath}'`)
       }
       // source volume path should be relative path
       sourceVolumePath = userVolume.sourceVolumePath.slice(
